@@ -131,6 +131,8 @@ This one could act based on token decode from the header and act on contextual p
 This is to implement in the future iteration.
 
 <!-- FRONTEND OVERVIEW -->
+## Frontend Overview
+
 There is not much i can say about frontend. It is an Angular 8 implementation that I took from https://www.devglan.com/spring-boot/spring-boot-angular-example
 
 I have removed Login part and modified model to fit my backend implementation. Showcased that I can work in the UI as well up to a certain point)
@@ -138,10 +140,13 @@ The UI does not handle exceptions and custom erros thrown from the backend. I ha
 To access the UI go here:
 
 <!-- CI/CD PIPELINE OVERVIEW -->
+## CI/CD Pipiline Overview
 I have implemented the full pipeline for the backend component in GitLab CI/CD. It gets triggered on every commit and performs build, test, docker and deploy to K8S. The pipeline is only implemented for the backend component. Frontend is buyilt in docker and pushed to k8s by me manually.
 You can acces the pipeline here.
 
 <!-- GCP, GKE, GCR OVERVIEW -->
+## GCP, GKE, GCR Overview
+
 In order to show the scalability of my component, i had to deploy k8s cluster in GCP, deploy my backend and frontend in there and confirm the flow works after I scale my component. In order to load balance the traffic, in my service definition for backend I used type LoadBalancer. GKE, then balances the traffic among multiple replicas. I included k8s manifests in the respective projects.
 
 * beyond-backend.yaml
