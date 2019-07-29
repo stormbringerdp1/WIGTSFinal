@@ -81,21 +81,74 @@ The goals of this sumbission are:
 * Provide a fully workable CI/CD pipeline for backend microservice
 * Show a working flow in the cloud
 
+I will try to keep this README small and simple. I will not go over the Java code or structure here as it is very simple and follows standards established in the community for simple CRUD REST component. Will only point out some points which I find interesting.
+
 ### Built With
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [Bootstrap](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
+Techs/Tools used in the showcase.
+* [Java Spring 2](https://getbootstrap.com)
+* [Angular 8](https://jquery.com)
+* [GitLab CI/CD](https://laravel.com)
+* [GCP, GKE, GCR](https://laravel.com)
+* [PostgreSQL](https://laravel.com)
 
+<!-- BACKEND OVERVIEW -->
+## Architectural decisions 
 
+I have choosen to redesign the following project
+Here is the list of desinsions I took while redesigning:
+1. Use Java Spring 2.1.x with Gradle 5.x. I am very familiar with Java and I like Gradle more than Maven. This speeds up my development speed
+2. Used MVC concept to separate the original monolith into modularized, loosely coupled component.
+3. Switched MySQL to PostgreSQL for database. If will need to scale DB in the cloud, can use CrunchyDB for this purpose which works with Postgresql.
 
-<!-- GETTING STARTED -->
-## Getting Started
+## Showcase points 
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+* application.properties
+I have used two properties files to be used in local deployment and in cluster(k8s) environment.
+In the application-clustered.properties you an see that the 'prod' db url and auth information is not present. The URL and DB credentials are supplied
+to the app inside the k8s environment based on when the app is running. It is achieved by the use of the K8S ConfigMaps. The URL name resolution is happening inside the cluster by the k8s DNS internal services resolution.
 
-### Prerequisites
+* Dockerfile
+Provided the Dockerfile for the application in order for it to be portable and run on K8S or any machine that has Docker.
+
+* K8S ConfigMaps
+I have build the component with the idea that the configuration has to be provided by the environment and not by the developer in the code. Basically, the component will behave in the expected way based on the environment it runs on. So, the developer should not be concerned about configs as much.
+I have used K8S ConfigMap to provide configuration to the Java in runtime.
+
+## To improve for next iteration
+
+* Test code coverage and quality
+I have provided some very basic unit testing and one integration test to show that I am familiar with them)) For the next iteration, I would increase the number of tests as well as their quality.
+
+* Fields validations
+I do not provide custom exception on every generic exception that the code can throw. For example if somebody provides a name field of more than 50 chars, there will be an exception thrown. I do not explicitely handle it, so it will be thrown in the controller. The exception is clear, but if handeled explicetely, will not polute the output and will display a nicer message.
+
+* Exception handling
+I have provided one exception hadling with validation on the email field. As stated earlier, exception on field vslidation ccan be one more to include.
+
+* Authontication/Authorization
+The token generation should be a part of a separate component.
+This one could act based on token decode from the header and act on contextual permission.
+This is to implement in the future iteration.
+
+<!-- Frontend OVERVIEW -->
+There is not much i can say about frontend. It is an Angular 8 implementation that I took from https://www.devglan.com/spring-boot/spring-boot-angular-example
+
+I have removed Login part and modified model to fit my backend implementation. Showcased that I can work in the UI as well up to a certain point)
+The UI does not handle exceptions and custom erros thrown from the backend. I have attached it, so you can see the full flow of application from the UI to backend and back. SAll deployed in the cloud.
+To access the UI go here:
+
+<!-- CI/CD Pipeline Overview -->
+I have implemented the full pipeline for the backend component in GitLab CI/CD. It gets triggered on every commit and performs build, test, docker and deploy to K8S. The pipeline is only implemented for the backend component. Frontend is buyilt in docker and pushed to k8s by me manually.
+You can acces the pipeline here.
+
+<!-- GCP, GKE and GCR Overview -->
+In order to show the scalability of my component, i had to deploy k8s cluster in GCP, deploy my baqckend and frontend in there and confirm the flow works after I scale my component. In order to load balance the traffic, in my service definition for backend I used type LoadBalancer. GKE, then balances the traffic among multiple replicas.
+
+* beyond-backend.yaml
+Contains k8s manifest for the backend component
+
+* postgres-external.yaml
+Manifest for the communication with the postgres. This points to an external DB. As you can see, if the DB url and/or port changes, we have to change it her instead of changing it in the config of the component. Very portable.
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
