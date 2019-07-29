@@ -94,11 +94,22 @@ Techs/Tools used in the showcase.
 <!-- ARCHITECTURAL DECISIONS -->
 ## Architectural decisions 
 
-I have choosen to redesign the following project
-Here is the list of desinsions I took while redesigning:
-1. Use Java Spring 2.1.x with Gradle 5.x. I am very familiar with Java and I like Gradle more than Maven. This speeds up my development speed
+I have choosen to redesign the following project https://github.com/shephertz/App42PaaS-Java-MySQL-Sample
+
+Here is the list of decisions I took before doing refactoring/redesigning:
+
+1. Use Java Spring 2.1.x with Gradle 5.x.
+  * I am very familiar with Java, so choosing this language speeds up the development process.
+  * I find the groovy/kotlin style of Gradle nicer than XML style of Maven. So, for trhis project I chosen Gradle.
 2. Used MVC concept to separate the original monolith into modularized, loosely coupled component.
-3. Switched MySQL to PostgreSQL for database. If will need to scale DB in the cloud, can use CrunchyDB for this purpose which works with Postgresql.
+  * Web - contains exposed apis and classes pertinent to the web layer of the component
+  * Entity - DB entities
+  * Service - main layer where all the logic happens if any
+  * Repository - DB logic happens here
+  * Configuration - configs for different layers of the app
+
+3. Use of PostgreSQL as the primary database 
+  * Both PostgresQL and MySQL are good choses. I have chosen Postgres because I of the CrunchyDB framework we can use if we need to scale in the cloud. 
 
 <!-- BACKEND OVERVIEW -->
 # Bakcend Overview 
