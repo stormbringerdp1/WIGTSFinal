@@ -81,7 +81,7 @@ The goals of this sumbission are:
 * Provide a fully workable CI/CD pipeline for backend microservice
 * Show a working flow in the cloud
 
-I will try to keep this README small and simple. I will not go over the Java code or structure here as it is very simple and follows standards established in the community for simple CRUD REST component. Will only point out some points which I find interesting.
+I will try to keep this README small and simple with only important insights.
 
 ### Built With
 Techs/Tools used in the showcase.
@@ -107,26 +107,29 @@ Here is the list of decisions I took before doing refactoring/redesigning:
 * Service - main layer where all the logic happens if any
 * Repository - DB logic happens here
 * Configuration - configs for different layers of the app
+* db - flyway migrations
 
 3. Use of PostgreSQL as the primary database 
 * Both PostgresQL and MySQL are good choses. I have chosen Postgres because I of the CrunchyDB framework we can use if we need to scale in the cloud. 
 
-<!-- BACKEND OVERVIEW -->
-# Bakcend Overview 
+<!-- BACKEND INSIGHTS -->
+# Backend Insights 
 
-* application.properties
-I have used two properties files to be used in local deployment and in cluster(k8s) environment.
-In the application-clustered.properties you an see that the 'prod' db url and auth information is not present. The URL and DB credentials are supplied
-to the app inside the k8s environment based on when the app is running. It is achieved by the use of the K8S ConfigMaps. The URL name resolution is happening inside the cluster by the k8s DNS internal services resolution.
+* applicastion.properties
+  I have used properties files to make distinction between deploying locally and in the k8s
+  application.properties - used locally
+
+* application-clustered.properties - used in k8s clustered. This profile is passed to the java on runtime through k8s manifest.
+  The URL and DB credentials are supplied to the app inside the k8s environment. It is achieved by the use of the K8S ConfigMaps. The URL name resolution is happening inside the cluster by the k8s DNS internal services resolution.
 
 * Dockerfile
 Provided the Dockerfile for the application in order for it to be portable and run on K8S or any machine that has Docker.
 
 * K8S ConfigMaps
-I have build the component with the idea that the configuration has to be provided by the environment and not by the developer in the code. Basically, the component will behave in the expected way based on the environment it runs on. So, the developer should not be concerned about configs as much.
+I have build the component with the idea that the configuration has to be provided by the environment and not by the developer in the code. Basically, the component will behave in the expected way based on the environment it runs on. So, the developer should not be concerned about how to deploy the component. Component will connect to proper components and datasources based on the env.
 I have used K8S ConfigMap to provide configuration to the Java in runtime.
 
-## To improve for next iteration
+# To improve for next iteration
 
 * Test code coverage and quality
 I have provided some very basic unit testing and one integration test to show that I am familiar with them)) For the next iteration, I would increase the number of tests as well as their quality.
@@ -145,21 +148,31 @@ This is to implement in the future iteration.
 <!-- FRONTEND OVERVIEW -->
 ## Frontend Overview
 
-There is not much i can say about frontend. It is an Angular 8 implementation that I took from https://www.devglan.com/spring-boot/spring-boot-angular-example
+There is not much I can say about frontend. It is an Angular 8 implementation that I took from https://www.devglan.com/spring-boot/spring-boot-angular-example
 
 I have removed Login part and modified model to fit my backend implementation. Showcased that I can work in the UI as well up to a certain point)
-The UI does not handle exceptions and custom erros thrown from the backend. I have attached it, so you can see the full flow of application from the UI to backend and back. SAll deployed in the cloud.
-To access the UI go here:
+The UI does not handle exceptions and custom erros thrown from the backend. I have attached it, so you can see the full flow of application from the UI to backend and back. All deployed in the GCP cloud.
 
 <!-- CI/CD PIPELINE OVERVIEW -->
 ## CI/CD Pipiline Overview
-I have implemented the full pipeline for the backend component in GitLab CI/CD. It gets triggered on every commit and performs build, test, docker and deploy to K8S. The pipeline is only implemented for the backend component. Frontend is buyilt in docker and pushed to k8s by me manually.
+I have implemented the full pipeline for the backend component in GitLab CI/CD. It gets triggered on every commit
+
+Pipeline steps are:
+* build - build java jar
+* test - test the component
+* docker - dockerize and push to GRC
+* deploy to K8S - deploy the docker into GKE cluster
+
+The pipeline is only implemented for the backend component. Frontend docker is built and pushed to k8s by me manually.
 You can acces the pipeline here.
 
 <!-- GCP, GKE, GCR OVERVIEW -->
 ## GCP, GKE, GCR Overview
 
-In order to show the scalability of my component, i had to deploy k8s cluster in GCP, deploy my backend and frontend in there and confirm the flow works after I scale my component. In order to load balance the traffic, in my service definition for backend I used type LoadBalancer. GKE, then balances the traffic among multiple replicas. I included k8s manifests in the respective projects.
+In order to show the scalability of my component, I had to deploy k8s cluster in GCP. It is basic 2 nodes cluster.
+Deploy my backend and frontend in there and confirm the flow works after I scale my components.
+In order to load balance the traffic, in my service definition for backend I used type LoadBalancer. GKE, then balances the traffic among multiple replicas. I included k8s manifests in the respective projects.
+I have not implemnented load balancing for frontend. As an improvement I can use anothe LoadBalancer from GKE or use Istio/Ambassador or any other ingress controller for traffic balancing.
 
 * beyond-backend.yaml
 Contains k8s manifest for the backend component
