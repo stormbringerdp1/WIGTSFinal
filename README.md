@@ -130,25 +130,31 @@ The token generation should be a part of a separate component.
 This one could act based on token decode from the header and act on contextual permission.
 This is to implement in the future iteration.
 
-<!-- Frontend OVERVIEW -->
+<!-- FRONTEND OVERVIEW -->
 There is not much i can say about frontend. It is an Angular 8 implementation that I took from https://www.devglan.com/spring-boot/spring-boot-angular-example
 
 I have removed Login part and modified model to fit my backend implementation. Showcased that I can work in the UI as well up to a certain point)
 The UI does not handle exceptions and custom erros thrown from the backend. I have attached it, so you can see the full flow of application from the UI to backend and back. SAll deployed in the cloud.
 To access the UI go here:
 
-<!-- CI/CD Pipeline Overview -->
+<!-- CI/CD PIPELINE OVERVIEW -->
 I have implemented the full pipeline for the backend component in GitLab CI/CD. It gets triggered on every commit and performs build, test, docker and deploy to K8S. The pipeline is only implemented for the backend component. Frontend is buyilt in docker and pushed to k8s by me manually.
 You can acces the pipeline here.
 
-<!-- GCP, GKE and GCR Overview -->
-In order to show the scalability of my component, i had to deploy k8s cluster in GCP, deploy my baqckend and frontend in there and confirm the flow works after I scale my component. In order to load balance the traffic, in my service definition for backend I used type LoadBalancer. GKE, then balances the traffic among multiple replicas.
+<!-- GCP, GKE, GCR OVERVIEW -->
+In order to show the scalability of my component, i had to deploy k8s cluster in GCP, deploy my backend and frontend in there and confirm the flow works after I scale my component. In order to load balance the traffic, in my service definition for backend I used type LoadBalancer. GKE, then balances the traffic among multiple replicas. I included k8s manifests in the respective projects.
 
 * beyond-backend.yaml
 Contains k8s manifest for the backend component
 
 * postgres-external.yaml
 Manifest for the communication with the postgres. This points to an external DB. As you can see, if the DB url and/or port changes, we have to change it her instead of changing it in the config of the component. Very portable.
+
+* prod-cm.yaml
+This is the config file which should be deployed in the k8s cluster and it contains all the configurstions for the microservices. In my case it contains the url, username and password for the db. In normasl flow this config file is not part of repository and is handeled separately. In this way nobody see sensitive information. Only people who have access to the cluster can see it.
+
+
+
 
 This is an example of how to list things you need to use the software and how to install them.
 * npm
