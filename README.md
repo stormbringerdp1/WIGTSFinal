@@ -91,7 +91,7 @@ Techs/Tools used in the showcase.
 * [GCP, GKE, GCR](https://laravel.com)
 * [PostgreSQL](https://laravel.com)
 
-<!-- BACKEND OVERVIEW -->
+<!-- ARCHITECTURAL DECISIONS -->
 ## Architectural decisions 
 
 I have choosen to redesign the following project
@@ -100,7 +100,8 @@ Here is the list of desinsions I took while redesigning:
 2. Used MVC concept to separate the original monolith into modularized, loosely coupled component.
 3. Switched MySQL to PostgreSQL for database. If will need to scale DB in the cloud, can use CrunchyDB for this purpose which works with Postgresql.
 
-## Showcase points 
+<!-- BACKEND OVERVIEW -->
+## Bakcend Overview 
 
 * application.properties
 I have used two properties files to be used in local deployment and in cluster(k8s) environment.
