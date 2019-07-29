@@ -101,7 +101,7 @@ Here is the list of desinsions I took while redesigning:
 3. Switched MySQL to PostgreSQL for database. If will need to scale DB in the cloud, can use CrunchyDB for this purpose which works with Postgresql.
 
 <!-- BACKEND OVERVIEW -->
-## Bakcend Overview 
+# Bakcend Overview 
 
 * application.properties
 I have used two properties files to be used in local deployment and in cluster(k8s) environment.
