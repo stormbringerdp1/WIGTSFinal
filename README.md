@@ -189,7 +189,30 @@ This is the config file which should be deployed in the k8s cluster and it conta
 This is an example of how to list things you need to use the software and how to install them.
 * npm
 ```sh
-npm install npm@latest -g
+{
+    "status": 200,
+    "message": "List of users fetched successfully.",
+    "result": [
+        {
+            "id": 1,
+            "name": "Igor",
+            "email": "igor@gmail.com",
+            "description": "first user in"
+        },
+        {
+            "id": 2,
+            "name": "integration test",
+            "email": "test@gmal.com",
+            "description": "Used for integration testing, do not delete"
+        },
+        {
+            "id": 3,
+            "name": "Jack",
+            "email": "jack@gmail.com",
+            "description": "third user in"
+        }
+    ]
+}
 ```
 
 ### Installation
