@@ -1,20 +1,4 @@
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
@@ -95,6 +79,7 @@ Request contains the same body as for creation of a user
 No body is required
 
 Component runs in GCP(GKE)
+![GCP](https://drive.google.com/open?id=1GhdFLG2BOum5m2qR70E8h9ItX3tSsxTX)
 
 <!-- ARCHITECTURAL DECISIONS -->
 ## Architectural decisions 
@@ -115,7 +100,7 @@ Here is the list of decisions I took before doing refactoring/redesigning:
 * db - flyway migrations
 
 3. Use of PostgreSQL as the primary database 
-* Both PostgresQL and MySQL are good choses. I have chosen Postgres because of the [!CrunchyData](https://www.crunchydata.com/) framework we can use if we need to scale in the cloud. 
+* Both PostgresQL and MySQL are good choses. I have chosen Postgres because of the [CrunchyData](https://www.crunchydata.com/) framework we can use if we need to scale in the cloud. 
 
 <!-- BACKEND INSIGHTS -->
 ## Backend Insights 
@@ -148,7 +133,7 @@ Manifest for the communication with the postgres. This points to an external DB.
 * prod-cm.yaml
 This is the config file which should be deployed in the k8s cluster and it contains all the configurstions for the microservices. In my case it contains the url, username and password for the db. In normasl flow this config file is not part of repository and is handeled separately. In this way nobody sees sensitive information. Only people who have access to the cluster can see it. By using configmap, we automate the deployment process and control the behavior of the component through the environmewnt it runs on, instead of from the code. This is much less erroprone.
 
-  # Backend future improvements
+  ### Backend future improvements
 
 * Test code coverage and quality
 
@@ -179,7 +164,7 @@ The UI does not handle exceptions and custom erros thrown from the backend. I ha
 <!-- CI/CD PIPELINE OVERVIEW -->
 ## CI/CD Pipiline Overview
 I have implemented the full pipeline for the backend component in GitLab CI/CD. It gets triggered on every commit.
-The pipeline is available here(check it out!!): [!CI/CD Pipeline](https://gitlab.com/stormbringerdp/amaze-us/pipelines)
+The pipeline is available here(check it out!!): [CI/CD Pipeline](https://gitlab.com/stormbringerdp/amaze-us/pipelines)
 
 Pipeline steps are:
 * build - build java jar
