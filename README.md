@@ -79,7 +79,7 @@ Request contains the same body as for creation of a user
 No body is required
 
 Component runs in GCP(GKE)
-![GCP](https://drive.google.com/open?id=1GhdFLG2BOum5m2qR70E8h9ItX3tSsxTX)
+![GCP](https://github.com/stormbringerdp1/WIGTSFinal/blob/master/beyond.png)
 
 <!-- ARCHITECTURAL DECISIONS -->
 ## Architectural decisions 
