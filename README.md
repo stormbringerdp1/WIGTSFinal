@@ -23,12 +23,11 @@ Techs/Tools used in the showcase.
 The UI is available in here: http://35.225.55.107:30002/
 
 A very simple UI to show basic functionality of the redesigned application. Runs in GCP(GKE)
-
 The API is accessible through
-http://35.238.25.85/api/v1/
+* http://35.238.25.85/api/v1/
 
 The pipeline is accessible through here:
-[!CI/CD Pipeline](https://gitlab.com/stormbringerdp/amaze-us/pipelines)
+* [!CI/CD Pipeline](https://gitlab.com/stormbringerdp/amaze-us/pipelines)
 
 Basic CRUD(GET, POST, PUT and DELETE) functionality is supported on the users/ path:
 
