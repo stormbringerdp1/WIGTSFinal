@@ -27,7 +27,7 @@ The API is accessible through
 * http://35.238.25.85/api/v1/
 
 The pipeline is accessible through here:
-* [!CI/CD Pipeline](https://gitlab.com/stormbringerdp/amaze-us/pipelines)
+* [CI/CD Pipeline](https://gitlab.com/stormbringerdp/amaze-us/pipelines)
 
 Basic CRUD(GET, POST, PUT and DELETE) functionality is supported on the users/ path:
 
@@ -108,12 +108,15 @@ I have build the component with the idea that the configuration has to be provid
 I have used K8S ConfigMap to provide configuration to the Java in runtime.
 
 * beyond-backend.yaml
+
 Contains k8s manifest for the backend component
 
 * postgres-external.yaml
+
 Manifest for the communication with the postgres. This points to an external DB. As you can see, if the DB url and/or port changes, we have to change it in the config map only instead of changing it in the config of every component that uses the db. This design is very portable and easy for deployment. Developers do not need to care when deploy to prod. All will be automated.
 
 * prod-cm.yaml
+
 This is the config file which should be deployed in the k8s cluster and it contains all the configurstions for the microservices. In my case it contains the url, username and password for the db. In normasl flow this config file is not part of repository and is handeled separately. In this way nobody sees sensitive information. Only people who have access to the cluster can see it. By using configmap, we automate the deployment process and control the behavior of the component through the environmewnt it runs on, instead of from the code. This is much less erroprone.
 
   ### Backend future improvements
